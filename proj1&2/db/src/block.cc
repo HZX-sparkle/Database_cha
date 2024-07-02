@@ -409,21 +409,6 @@ DataBlock::insertRecord(std::vector<struct iovec> &iov)
     return std::pair<bool, unsigned short>(true, index);
 }
 
-bool updateRecord(std::vector<struct iovec> &iov){
-    RelationInfo *info = table_->info_;
-    unsigned int key = info->key;
-    DataType *type = info->fields[key].type;
-
-    // 先确定修改位置
-    unsigned short index =
-        type->search(buffer_, key, iov[key].iov_base, iov[key].iov_len);
-    
-    //修改：先删除再插入
-    this.deallocate(index)
-    this.insertRecord(iov)
-
-}
-
 bool DataBlock::copyRecord(Record &record)
 {
     // 判断剩余空间是否足够
@@ -468,8 +453,5 @@ DataBlock::RecordIterator DataBlock::endrecord()
     ri.index = getSlots();
     return ri;
 }
-
-
-
 
 } // namespace db

@@ -1,0 +1,24 @@
+# ninja log v5
+2	491	7416473633095769	src/CMakeFiles/dbimpl.dir/integer.cc.obj	e4fd77e8336acdfc
+42	931	7416473638808139	tests/CMakeFiles/utest.dir/db/integerTest.cc.obj	8ba8783ad606b703
+17	590	7416473635162628	src/CMakeFiles/dbimpl.dir/record.cc.obj	80a5e0767cdc239d
+14	688	7416473636116548	src/CMakeFiles/dbimpl.dir/timestamp.cc.obj	4d5cb39a0db8aaab
+6	700	7416473636474969	src/CMakeFiles/dbimpl.dir/file.cc.obj	1c613e71b785a229
+30	710	7416473636474969	src/CMakeFiles/dbimpl.dir/buffer.cc.obj	2560a7b67a67ce73
+10	744	7416473636935988	src/CMakeFiles/dbimpl.dir/datatype.cc.obj	e0d48b2fb72d9677
+22	740	7416473636935988	src/CMakeFiles/dbimpl.dir/block.cc.obj	9411416ed162b53
+34	732	7416473636695810	src/CMakeFiles/dbimpl.dir/table.cc.obj	824c5963a8379945
+25	798	7416473637395427	src/CMakeFiles/dbimpl.dir/schema.cc.obj	cc90bed86d339517
+54	882	7416473638336083	tests/CMakeFiles/utest.dir/db/datatypeTest.cc.obj	b3639527980ff69f
+798	967	7416473639126912	bin/dbimpl.lib	684272cf36d713ff
+37	2010	7416473649480278	tests/CMakeFiles/utest.dir/test.cc.obj	4cff87b011a6f33b
+45	886	7416473638397574	tests/CMakeFiles/utest.dir/db/checksumTest.cc.obj	487dafb395561a05
+58	891	7416473638440491	tests/CMakeFiles/utest.dir/db/timestampTest.cc.obj	ea548f96a3e08aa5
+689	921	7416473638658092	tests/CMakeFiles/utest.dir/db/x.cc.obj	6ffe47d1b3220499
+62	945	7416473638972620	tests/CMakeFiles/utest.dir/db/recordTest.cc.obj	2be7f5aca2160687
+70	947	7416473638972620	tests/CMakeFiles/utest.dir/db/schemaTest.cc.obj	de7912b848b248ea
+50	954	7416473639021874	tests/CMakeFiles/utest.dir/db/fileTest.cc.obj	e0f13dd8384e2ae5
+66	964	7416473639126912	tests/CMakeFiles/utest.dir/db/bufferTest.cc.obj	cd82b893db4b9784
+590	1275	7416473642260478	tests/CMakeFiles/utest.dir/db/tableTest.cc.obj	1d1e4f96684163fb
+494	1378	7416473643198020	tests/CMakeFiles/utest.dir/db/blockTest.cc.obj	34bc8ebb9bbbdd45
+2010	2327	7416473652623347	bin/utest.exe	83267ea4e9f883c3

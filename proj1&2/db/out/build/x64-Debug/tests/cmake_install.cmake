@@ -1,8 +1,8 @@
-# Install script for directory: D:/Code/database/db2/db/tests
+# Install script for directory: D:/Code/database/proj1&2/db/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "D:/Code/database/db2/db/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "D:/Code/database/proj1&2/db/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
