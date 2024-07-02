@@ -313,7 +313,4 @@ unsigned int Table::idleCount()
     kBuffer.releaseBuf(bd);
     return count;
 }
-
-
-
 } // namespace db
