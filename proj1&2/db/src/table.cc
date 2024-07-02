@@ -284,6 +284,32 @@ int Table::insert(unsigned int blkid, std::vector<struct iovec> &iov)
     return S_OK;
 }
 
+int Table::remove(unsigned int blkid, void *keybuf, unsigned int len){
+    DataBlock data;
+    SuperBlock super;
+    data.setTable(this);
+
+    // 从buffer中借用
+    BufDesp *bd = kBuffer.borrow(name_.c_str(), blkid);
+    data.attach(bd->buffer);
+
+    unsigned short index = data.searchRecord(keybuf, len)
+    data.deallocate(index)
+}
+
+int Table::update(unsigned int blkid, std::vector<struct iovec> &iov){
+    DataBlock data;
+    SuperBlock super;
+    data.setTable(this);
+
+    // 从buffer中借用
+    BufDesp *bd = kBuffer.borrow(name_.c_str(), blkid);
+    data.attach(bd->buffer);
+
+    data.updateRecord(iov)
+
+}
+
 size_t Table::recordCount()
 {
     BufDesp *bd = kBuffer.borrow(name_.c_str(), 0);
