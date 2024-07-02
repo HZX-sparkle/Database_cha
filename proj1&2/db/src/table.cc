@@ -284,6 +284,44 @@ int Table::insert(unsigned int blkid, std::vector<struct iovec> &iov)
     return S_OK;
 }
 
+int Table::remove(unsigned int blkid, void *keybuf, unsigned int len)
+{
+    DataBlock data;
+    SuperBlock super;
+    data.setTable(this);
+
+    // 从buffer中借用
+    BufDesp *bd = kBuffer.borrow(name_.c_str(), blkid);
+    data.attach(bd->buffer);
+
+    unsigned short index = data.searchRecord(keybuf, len);
+
+    // 比较key
+    Record record;
+    if (index < data.getSlots()) {
+        Slot *slots = data.getSlotsPointer();
+        record.attach(
+            data.buffer_ + be16toh(slots[index].offset),
+            be16toh(slots[index].length));
+        unsigned int key = info_->key;
+        unsigned char *pkey;
+        unsigned int len2;
+        record.refByIndex(&pkey, &len2, key);
+        if (memcmp(pkey, keybuf, len2) == 0) // key相等，找到，删除
+        {
+            data.deallocate(index);
+            kBuffer.releaseBuf(bd); // 释放buffer
+            // 修改表头统计
+            bd = kBuffer.borrow(name_.c_str(), 0);
+            super.attach(bd->buffer);
+            super.setRecords(super.getRecords() - 1);
+            bd->relref();
+            return S_OK; // 删除成功
+        }
+    }
+    return S_FALSE;
+}
+
 size_t Table::recordCount()
 {
     BufDesp *bd = kBuffer.borrow(name_.c_str(), 0);

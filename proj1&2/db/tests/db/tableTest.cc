@@ -372,4 +372,55 @@ TEST_CASE("db/table.h")
 
         REQUIRE(!check(table));
     }
+
+    // 每插一条删一条，重复10000次
+    SECTION("remove")
+    {
+        Table table;
+        table.open("table");
+        DataType *type = table.info_->fields[table.info_->key].type;
+
+        // 准备添加
+        std::vector<struct iovec> iov(3);
+        long long nid;
+        char phone[20];
+        char addr[128];
+
+        iov[0].iov_base = &nid;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = phone;
+        iov[1].iov_len = 20;
+        iov[2].iov_base = (void *) addr;
+        iov[2].iov_len = 128;
+
+        int count = 0;
+        int count2 = 0;
+
+        for (Table::BlockIterator bi = table.beginblock();
+             bi != table.endblock();
+             ++bi)
+            count += bi->getSlots();
+
+        count2 = count;
+
+        for (int i = 0; i < 1; ++i) {
+            nid = rand();
+            type->htobe(&nid);
+            // locate位置
+            unsigned int blkid =
+                table.locate(iov[0].iov_base, (unsigned int) iov[0].iov_len);
+            // 插入记录
+            int ret = table.insert(blkid, iov);
+            if (ret == S_OK) ++count2;
+            // 删除记录
+            ret = table.remove(blkid, iov[0].iov_base, (unsigned int) iov[0].iov_len);
+            if (ret == S_OK) --count2;
+        }
+
+        REQUIRE(count == count2);
+        REQUIRE(count == table.recordCount());
+        REQUIRE(table.idleCount() == 0);
+
+        REQUIRE(!check(table));
+    }
 }
