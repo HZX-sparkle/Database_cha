@@ -218,7 +218,7 @@ unsigned int Table::locate(void *keybuf, unsigned int len)
         // 要排除相等的情况
         bret = type->less((unsigned char *) keybuf, len, pkey, klen);
         if (bret)
-            return prev->getSelf(); //
+            return prev->getSelf(); 
         else
             return bi->getSelf(); // 相等
     }
@@ -320,6 +320,65 @@ int Table::remove(unsigned int blkid, void *keybuf, unsigned int len)
         }
     }
     return S_FALSE;
+}
+
+int Table::update(unsigned int blkid, std::vector<struct iovec>& iov)
+{
+    DataBlock data;
+    SuperBlock super;
+    data.setTable(this);
+
+    // 从buffer中借用
+    BufDesp *bd = kBuffer.borrow(name_.c_str(), blkid);
+    data.attach(bd->buffer);
+
+    // 尝试更新
+    std::pair<bool, unsigned short> ret = data.updateRecord(iov);
+    if (ret.first)
+    {
+        kBuffer.releaseBuf(bd); // 释放buffer
+        return S_OK;
+    } 
+    else if (ret.second == (unsigned short) -1)
+    {
+        kBuffer.releaseBuf(bd); // 释放buffer
+        return ENOENT;   // key不存在
+    }
+
+    // 存在该条记录，但空间不足
+    // 分裂block
+    unsigned short insert_position = ret.second;
+    std::pair<unsigned short, bool> split_position =
+        data.splitPosition(Record::size(iov), insert_position);
+    // 先分配一个block
+    DataBlock next;
+    next.setTable(this);
+    blkid = allocate();
+    BufDesp *bd2 = kBuffer.borrow(name_.c_str(), blkid);
+    next.attach(bd2->buffer);
+
+    // 移动记录到新的block上
+    while (data.getSlots() > split_position.first) {
+        Record record;
+        data.refslots(split_position.first, record);
+        next.copyRecord(record);
+        data.deallocate(split_position.first);
+    }
+    // 插入新记录，不需要再重排顺序
+    if (split_position.second)
+        data.insertRecord(iov);
+    else
+        next.insertRecord(iov);
+    // 维持数据链
+    next.setNext(data.getNext());
+    data.setNext(next.getSelf());
+    bd2->relref();
+
+    bd = kBuffer.borrow(name_.c_str(), 0);
+    super.attach(bd->buffer);
+    super.setRecords(super.getRecords() + 1);
+    bd->relref();
+    return S_OK;
 }
 
 size_t Table::recordCount()

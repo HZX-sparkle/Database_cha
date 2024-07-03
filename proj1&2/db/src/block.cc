@@ -409,6 +409,35 @@ DataBlock::insertRecord(std::vector<struct iovec> &iov)
     return std::pair<bool, unsigned short>(true, index);
 }
 
+std::pair<bool, unsigned short>
+DataBlock::updateRecord(std::vector<struct iovec> &iov){
+    RelationInfo *info = table_->info_;
+    unsigned int key = info->key;
+    DataType *type = info->fields[key].type;
+
+    // 先确定修改位置
+    unsigned short index =
+        type->search(buffer_, key, iov[key].iov_base, iov[key].iov_len);
+
+    // 比较key
+    Record record;
+    if (index < getSlots()) {
+        Slot *slots = getSlotsPointer();
+        record.attach(
+            buffer_ + be16toh(slots[index].offset),
+            be16toh(slots[index].length));
+        unsigned char *pkey;
+        unsigned int len;
+        record.refByIndex(&pkey, &len, key);
+        if (memcmp(pkey, iov[key].iov_base, len) != 0) // key不相等不能更新
+            return std::pair<bool, unsigned short>(false, -1);
+    }
+
+    //修改：先删除再插入
+    this->deallocate(index);
+    return this->insertRecord(iov);
+}
+
 bool DataBlock::copyRecord(Record &record)
 {
     // 判断剩余空间是否足够

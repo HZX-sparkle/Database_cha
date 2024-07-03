@@ -10,6 +10,7 @@
 #include <db/table.h>
 #include <db/block.h>
 #include <db/buffer.h>
+#include<iostream>
 using namespace db;
 
 namespace {
@@ -75,10 +76,10 @@ TEST_CASE("db/table.h")
     SECTION("less")
     {
         Buffer::BlockMap::key_compare compare;
-        const char *table = "hello";
-        std::pair<const char *, unsigned int> key1(table, 1);
-        const char *table2 = "hello";
-        std::pair<const char *, unsigned int> key2(table2, 1);
+        const char* table = "hello";
+        std::pair<const char*, unsigned int> key1(table, 1);
+        const char* table2 = "hello";
+        std::pair<const char*, unsigned int> key2(table2, 1);
         bool ret = !compare(key1, key2);
         REQUIRE(ret);
         ret = !compare(key2, key1);
@@ -144,7 +145,7 @@ TEST_CASE("db/table.h")
     {
         Table table;
         table.open("table");
-        DataType *type = table.info_->fields[table.info_->key].type;
+        DataType* type = table.info_->fields[table.info_->key].type;
 
         // 检查表记录
         long long records = table.recordCount();
@@ -153,7 +154,7 @@ TEST_CASE("db/table.h")
         REQUIRE(bi->getSlots() == 4); // 已插入4条记录，但表上没记录
         bi.release();
         // 修正表记录
-        BufDesp *bd = kBuffer.borrow("table", 0);
+        BufDesp* bd = kBuffer.borrow("table", 0);
         REQUIRE(bd);
         SuperBlock super;
         super.attach(bd->buffer);
@@ -179,12 +180,12 @@ TEST_CASE("db/table.h")
             iov[0].iov_len = 8;
             iov[1].iov_base = phone;
             iov[1].iov_len = 20;
-            iov[2].iov_base = (void *) addr;
+            iov[2].iov_base = (void*)addr;
             iov[2].iov_len = 128;
 
             // locate位置
             unsigned int blkid =
-                table.locate(iov[0].iov_base, (unsigned int) iov[0].iov_len);
+                table.locate(iov[0].iov_base, (unsigned int)iov[0].iov_len);
             // 插入记录
             ret = table.insert(blkid, iov);
             if (ret == EEXIST) { printf("id=%lld exist\n", be64toh(nid)); }
@@ -199,7 +200,7 @@ TEST_CASE("db/table.h")
     {
         Table table;
         table.open("table");
-        DataType *type = table.info_->fields[table.info_->key].type;
+        DataType* type = table.info_->fields[table.info_->key].type;
 
         Table::BlockIterator bi = table.beginblock();
 
@@ -286,7 +287,7 @@ TEST_CASE("db/table.h")
     {
         Table table;
         table.open("table");
-        DataType *type = table.info_->fields[table.info_->key].type;
+        DataType* type = table.info_->fields[table.info_->key].type;
 
         // 准备添加
         std::vector<struct iovec> iov(3);
@@ -301,7 +302,7 @@ TEST_CASE("db/table.h")
         iov[0].iov_len = 8;
         iov[1].iov_base = phone;
         iov[1].iov_len = 20;
-        iov[2].iov_base = (void *) addr;
+        iov[2].iov_base = (void*)addr;
         iov[2].iov_len = 128;
 
         int ret = table.insert(1, iov);
@@ -334,7 +335,7 @@ TEST_CASE("db/table.h")
     {
         Table table;
         table.open("table");
-        DataType *type = table.info_->fields[table.info_->key].type;
+        DataType* type = table.info_->fields[table.info_->key].type;
 
         // 准备添加
         std::vector<struct iovec> iov(3);
@@ -346,7 +347,7 @@ TEST_CASE("db/table.h")
         iov[0].iov_len = 8;
         iov[1].iov_base = phone;
         iov[1].iov_len = 20;
-        iov[2].iov_base = (void *) addr;
+        iov[2].iov_base = (void*)addr;
         iov[2].iov_len = 128;
 
         int count = 96;
@@ -356,15 +357,15 @@ TEST_CASE("db/table.h")
             type->htobe(&nid);
             // locate位置
             unsigned int blkid =
-                table.locate(iov[0].iov_base, (unsigned int) iov[0].iov_len);
+                table.locate(iov[0].iov_base, (unsigned int)iov[0].iov_len);
             // 插入记录
             int ret = table.insert(blkid, iov);
             if (ret == S_OK) ++count;
         }
 
         for (Table::BlockIterator bi = table.beginblock();
-             bi != table.endblock();
-             ++bi)
+            bi != table.endblock();
+            ++bi)
             count2 += bi->getSlots();
         REQUIRE(count == count2);
         REQUIRE(count == table.recordCount());
@@ -373,12 +374,12 @@ TEST_CASE("db/table.h")
         REQUIRE(!check(table));
     }
 
-    // 每插一条删一条，重复10000次
+    // 每插一条删一条，重复10次
     SECTION("remove")
     {
         Table table;
         table.open("table");
-        DataType *type = table.info_->fields[table.info_->key].type;
+        DataType* type = table.info_->fields[table.info_->key].type;
 
         // 准备添加
         std::vector<struct iovec> iov(3);
@@ -390,37 +391,176 @@ TEST_CASE("db/table.h")
         iov[0].iov_len = 8;
         iov[1].iov_base = phone;
         iov[1].iov_len = 20;
-        iov[2].iov_base = (void *) addr;
+        iov[2].iov_base = (void*)addr;
         iov[2].iov_len = 128;
 
         int count = 0;
         int count2 = 0;
 
         for (Table::BlockIterator bi = table.beginblock();
-             bi != table.endblock();
-             ++bi)
+            bi != table.endblock();
+            ++bi)
             count += bi->getSlots();
 
-        count2 = count;
+        count2 = 0;
 
-        for (int i = 0; i < 1; ++i) {
+        for (int i = 0; i < 1000; ++i) {
             nid = rand();
             type->htobe(&nid);
             // locate位置
             unsigned int blkid =
-                table.locate(iov[0].iov_base, (unsigned int) iov[0].iov_len);
+                table.locate(iov[0].iov_base, (unsigned int)iov[0].iov_len);
             // 插入记录
             int ret = table.insert(blkid, iov);
-            if (ret == S_OK) ++count2;
+            if (ret == S_OK) ++count;
             // 删除记录
-            ret = table.remove(blkid, iov[0].iov_base, (unsigned int) iov[0].iov_len);
-            if (ret == S_OK) --count2;
+            ret = table.remove(blkid, iov[0].iov_base, (unsigned int)iov[0].iov_len);
+            if (ret == S_OK) --count;
         }
+
+        for (Table::BlockIterator bi = table.beginblock();
+            bi != table.endblock();
+            ++bi)
+            count2 += bi->getSlots();
 
         REQUIRE(count == count2);
         REQUIRE(count == table.recordCount());
         REQUIRE(table.idleCount() == 0);
 
+        REQUIRE(!check(table));
+    }
+
+    SECTION("update1")
+    {
+        Table table;
+        table.open("table");
+        DataType* type = table.info_->fields[table.info_->key].type;
+
+        // 准备添加
+        std::vector<struct iovec> iov(3);
+        long long nid;
+        char phone[20];
+        char addr[120];
+
+        strcpy_s(phone, "1234567890");
+        strcpy_s(addr, "1234 Test Address");
+
+        iov[0].iov_base = &nid;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = phone;
+        iov[1].iov_len = 20;
+        iov[2].iov_base = (void*)addr;
+        iov[2].iov_len = 120;
+
+
+        nid = rand();
+        type->htobe(&nid);
+
+        // locate位置
+        unsigned int blkid =
+            table.locate(iov[0].iov_base, (unsigned int)iov[0].iov_len);
+
+        // 插入记录
+        int ret = table.insert(blkid, iov);
+
+        // 修改并更新记录
+        strcpy_s(phone, "0987654321");
+        strcpy_s(addr, "4321 Test Address");
+        ret = table.update(blkid, iov);
+        REQUIRE(ret == S_OK);
+
+        // 比较查询记录与修改记录是否一样
+        RelationInfo* info = table.info_;
+        unsigned int key = info->key;
+
+        Table::BlockIterator data;
+        Table::BlockIterator prev = table.beginblock();
+
+        int is_return = false;
+        for (Table::BlockIterator bi = table.beginblock(); bi != table.endblock(); ++bi) {
+            // 获取第1个记录
+            Record record;
+            bi->refslots(0, record);
+
+            // 与参数比较
+            unsigned char* pkey;
+            unsigned int klen;
+            record.refByIndex(&pkey, &klen, key);
+            bool bret = type->less(pkey, klen, (unsigned char*)iov[0].iov_base, (unsigned int)iov[0].iov_len);
+            if (bret) {
+                prev = bi;
+                continue;
+            }
+            // 要排除相等的情况
+            bret = type->less((unsigned char*)iov[0].iov_base, (unsigned int)iov[0].iov_len, pkey, klen);
+            if (bret)
+            {
+                data = prev; //
+                is_return = true;
+                break;
+            }
+            else
+            {
+                data = bi; // 相等
+                is_return = true;
+                break;
+            }
+        }
+        if (!is_return)
+            data = prev;
+
+        unsigned short index =
+            type->search(data->buffer_, key, iov[key].iov_base, iov[key].iov_len);
+
+        DataBlock::RecordIterator ri = data->beginrecord();
+        Record record;
+        if (index < data->getSlots()) {
+            Slot* slots = data->getSlotsPointer();
+            record.attach(
+                data->buffer_ + be16toh(slots[index].offset),
+                be16toh(slots[index].length));
+            unsigned char* pkey;
+            unsigned int len;
+            record.refByIndex(&pkey, &len, 1);
+            REQUIRE(strcmp((const char*)pkey, "0987654321") == 0);
+            record.refByIndex(&pkey, &len, 2);
+            REQUIRE(strcmp((const char*)pkey, "4321 Test Address") == 0);
+        }
+
+        REQUIRE(!check(table));
+    }
+
+    // 更新不存在的record
+    SECTION("update2")
+    {
+        Table table;
+        table.open("table");
+        DataType* type = table.info_->fields[table.info_->key].type;
+
+        // 准备删除
+        std::vector<struct iovec> iov(3);
+        long long nid;
+        char phone[20];
+        char addr[120];
+
+        iov[0].iov_base = &nid;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = phone;
+        iov[1].iov_len = 20;
+        iov[2].iov_base = (void*)addr;
+        iov[2].iov_len = 128;
+
+        nid = rand();
+        type->htobe(&nid);
+
+        // locate位置
+        unsigned int blkid =
+            table.locate(iov[0].iov_base, (unsigned int)iov[0].iov_len);
+        // 删除记录
+        table.remove(blkid, iov[0].iov_base, (unsigned int)iov[0].iov_len);
+        // 更新不存在的记录
+        int ret = table.update(blkid, iov);
+        REQUIRE(ret == ENOENT);
         REQUIRE(!check(table));
     }
 }
