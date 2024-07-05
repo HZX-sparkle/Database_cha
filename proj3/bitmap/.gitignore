@@ -1,0 +1,4 @@
+build/*
+third/*
+!third/readme.md
+!third/CMakeLists.txt
