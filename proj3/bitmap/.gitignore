@@ -2,3 +2,6 @@ build/*
 third/*
 !third/readme.md
 !third/CMakeLists.txt
+!third/googletest-1.14.0.tar.gz
+!third/CRoaring-4.0.0.tar.gz
+.vscode/*
