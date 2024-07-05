@@ -4,9 +4,9 @@
 
 ~~~bash
 # 解压
-tar -zxf googletest-1.14.1.tar.gz
+tar -zxf googletest-1.14.0.tar.gz
 # 进入解压后的目录
-cd googletest-release-1.14.1
+cd googletest-1.14.0
 # 为编译创建一个目录
 mkdir build && cd build
 cmake ..
