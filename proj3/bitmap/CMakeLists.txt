@@ -32,7 +32,8 @@ set(SOURCES
 
 # 包含头文件
 include_directories(${CMAKE_SOURCE_DIR}/include
-${CMAKE_SOURCE_DIR}/third/CRoaring-4.0.0/include)
+${CMAKE_SOURCE_DIR}/third/CRoaring-4.0.0/include
+${CMAKE_SOURCE_DIR}/third/CRoaring-4.0.0/cpp)
 
 # 编译目录
 add_subdirectory(third)
