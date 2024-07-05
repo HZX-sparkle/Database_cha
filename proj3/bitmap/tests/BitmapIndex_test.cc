@@ -79,3 +79,37 @@ TEST(BitmapIndexTest, buildInvertedIndex)
     EXPECT_TRUE(bitmap.contains(1));
     EXPECT_TRUE(bitmap.contains(3));
 }
+
+// 交或差运算
+TEST(BitmapIndexTest, Operation)
+{
+    BitmapIndex index;
+    index.readCSV("../data/tags.csv");
+    index.buildInvertedIndex();
+    std::vector <Roaring> bitmaps = {index.getBitmap("tag3"), index.getBitmap("tag4")};
+
+    // andOperation
+    Roaring andResult = BitmapIndex::andOperation(bitmaps);
+    std::cout << "AND operation result: ";
+    andResult.printf();
+    std::cout << "\n";
+    EXPECT_TRUE(andResult.isEmpty());
+
+    // orOperation
+    Roaring orResult = BitmapIndex::orOperation(bitmaps);
+    std::cout << "OR operation result: ";
+    orResult.printf();
+    std::cout << "\n";
+    EXPECT_TRUE(orResult.contains(1));
+    EXPECT_TRUE(orResult.contains(2));
+    EXPECT_TRUE(orResult.contains(4));
+
+    // xorOperation
+    Roaring xorResult = BitmapIndex::xorOperation(bitmaps);
+    std::cout << "XOR operation result: ";
+    xorResult.printf();
+    std::cout << "\n";
+    EXPECT_TRUE(xorResult.contains(1));
+    EXPECT_TRUE(xorResult.contains(2));
+    EXPECT_TRUE(xorResult.contains(4));
+}
