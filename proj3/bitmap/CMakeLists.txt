@@ -26,23 +26,16 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${PROJECT_BINARY_DIR}/bin")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${PROJECT_BINARY_DIR}/bin")
 
 # 源文件
-set(SOURCES 
-    ${CMAKE_SOURCE_DIR}/src/BitmapIndex.cc
-    ${CMAKE_SOURCE_DIR}/src/demo.cc)
+set(SOURCES ${CMAKE_SOURCE_DIR}/src/BitmapIndex.cc)
 
 # 包含头文件
 include_directories(${CMAKE_SOURCE_DIR}/include
 ${CMAKE_SOURCE_DIR}/third/CRoaring-4.0.0/include
-${CMAKE_SOURCE_DIR}/third/CRoaring-4.0.0/cpp)
+${CMAKE_SOURCE_DIR}/third/CRoaring-4.0.0/cpp
+)
 
 # 编译目录
 add_subdirectory(third)
 add_subdirectory(src)
 add_subdirectory(tests)
-
-# 添加可执行程序目标
-add_executable(BitmapIndexProject ${SOURCES})
-
-# 链接库
-target_link_libraries(BitmapIndexProject roaring)
 

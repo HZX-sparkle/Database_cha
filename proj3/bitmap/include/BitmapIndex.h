@@ -10,7 +10,7 @@ using namespace roaring;
 
 class BitmapIndex {
 public:
-    void readCSV(const std::string &filename);
+    bool readCSV(const std::string &filename);
     void buildInvertedIndex();
     Roaring getBitmap(const std::string &tag) const;
     std::vector<std::string> getTags(const std::string &id) const;
