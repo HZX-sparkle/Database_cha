@@ -1,8 +1,8 @@
-D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/src/CMakeFiles/dbimpl.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/src/CMakeFiles/edit_cache.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/src/CMakeFiles/rebuild_cache.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/tests/CMakeFiles/utest.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/tests/CMakeFiles/edit_cache.dir
-D:/Code/database/proj1&2/db/out/build/x64-Debug/tests/CMakeFiles/rebuild_cache.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/src/CMakeFiles/dbimpl.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/src/CMakeFiles/edit_cache.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/src/CMakeFiles/rebuild_cache.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/tests/CMakeFiles/utest.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/tests/CMakeFiles/edit_cache.dir
+D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/tests/CMakeFiles/rebuild_cache.dir

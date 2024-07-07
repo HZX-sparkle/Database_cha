@@ -563,83 +563,89 @@ TEST_CASE("db/table.h")
         REQUIRE(ret == ENOENT);
         REQUIRE(!check(table));
     }
-    SECTION("b_plus_tree_logic_note")
-    {
-        using namespace db;
-        Table::B_plus_tree::Node *left_son;
-        left_son = new Table::B_plus_tree::Node(
-            20, BLOCK_TYPE_INDEX_POINT_TO_LEAF, (unsigned int) 0);
+    
 
-        left_son->insert(5, new int(4), sizeof(int));
+    SECTION("b_plus_tree_node") {
+        Table table;
+        table.open("table");
+        Table::B_plus_tree bt(&table);
 
-        left_son->insert(2, new int(9), sizeof(int));
-
-        REQUIRE(left_son->search(new int(4), sizeof(int)) == 5);
-        REQUIRE(left_son->search(new int(9), sizeof(int)) == 2);
-        REQUIRE(left_son->search(new int(3), sizeof(int)) == 0);
-        REQUIRE(left_son->search(new int(8), sizeof(int)) == 5);
-        REQUIRE(left_son->search(new int(11), sizeof(int)) == 2);
-
-        Table::B_plus_tree::Node *right_son;
-        right_son = new Table::B_plus_tree::Node(
-            20, BLOCK_TYPE_INDEX_POINT_TO_LEAF, (unsigned int) 10);
-
-        right_son->insert(15, new int(14), sizeof(int));
-
-        right_son->insert(12, new int(20), sizeof(int));
-
-        REQUIRE(right_son->search(new int(14), sizeof(int)) == 15);
-        REQUIRE(right_son->search(new int(20), sizeof(int)) == 12);
-        REQUIRE(right_son->search(new int(13), sizeof(int)) == 10);
-        REQUIRE(right_son->search(new int(19), sizeof(int)) == 15);
-        REQUIRE(right_son->search(new int(21), sizeof(int)) == 12);
-
-        Table::B_plus_tree::Node *root;
-        root = new Table::B_plus_tree::Node(
-            20, BLOCK_TYPE_INDEX_INTERNAL, right_son);
-        root->sub_nodes.push_back({left_son, new int(10), sizeof(int)});
-
-        REQUIRE(root->search(new int(4), sizeof(int)) == 5);
-        REQUIRE(root->search(new int(10), sizeof(int)) == 10);
-        REQUIRE(root->search(new int(3), sizeof(int)) == 0);
-        REQUIRE(root->search(new int(8), sizeof(int)) == 5);
-        REQUIRE(root->search(new int(14), sizeof(int)) == 15);
-        REQUIRE(root->search(new int(20), sizeof(int)) == 12);
-        REQUIRE(root->search(new int(13), sizeof(int)) == 10);
-        REQUIRE(root->search(new int(19), sizeof(int)) == 15);
-        REQUIRE(root->search(new int(21), sizeof(int)) == 12);
-
-    }
-
-    SECTION("b_plus_tree_logic") {
-        using namespace db;
-        Table::B_plus_tree bt(20);
-
-        bt.insert(0, new int(1), sizeof(int));
-        bt.insert(5, new int(4), sizeof(int));
-        bt.insert(2, new int(10), sizeof(int));
-
+        DataType *type = findDataType("BIGINT");
+        DataType *type2 = findDataType("INT");
+        std::vector<struct iovec> iov(2);
+        long long key;
+        unsigned int blkid;
+        // 第1条记录
+        key = 7;
+        blkid = 3;
+        type->htobe(&key);
+        type2->htobe(&blkid);
+        iov[0].iov_base = &key;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = &blkid;
+        iov[1].iov_len = 4;
+        bt.insert(iov);
+        REQUIRE(
+            bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) == 3);
         
-        REQUIRE(bt.search(new int(4), sizeof(int)) == 5);
-        REQUIRE(bt.search(new int(10), sizeof(int)) == 2);
-        REQUIRE(bt.search(new int(3), sizeof(int)) == 0);
-        REQUIRE(bt.search(new int(9), sizeof(int)) == 5);
-        REQUIRE(bt.search(new int(11), sizeof(int)) == 2);
-        
+        key = 32;
+        blkid = 2;
+        type->htobe(&key);
+        type2->htobe(&blkid);
+        bt.insert(iov);
+        REQUIRE(bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) == 2);
     }
     SECTION("b_plus_tree_logic2")
     {
-        using namespace db;
-        Table::B_plus_tree bt(10);
-        int n =300;
-        
-        for (int i = 1; i <= n; i++) {
-            bt.insert(i, new int(i), sizeof(int));
+        Table table;
+        table.open("table");
+        Table::B_plus_tree bt(&table);
+
+        DataType *type = findDataType("BIGINT");
+        DataType *type2 = findDataType("INT");
+        std::vector<struct iovec> iov(2);
+        long long key;
+        unsigned int blkid;
+        // 第1条记录
+        key = 7;
+        blkid = 3;
+        type->htobe(&key);
+        type2->htobe(&blkid);
+        iov[0].iov_base = &key;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = &blkid;
+        iov[1].iov_len = 4;
+       
+        int n = 500;
+        for (int i = 100; i <= n; i++) {
+            key = i;
+            blkid = i;
+            type->htobe(&key);
+            type2->htobe(&blkid);
+            bt.insert(iov);
+        }
+         n = 500;
+        for (int i = 100; i <= n; i++) {
+             key = i;
+             blkid = i;
+             type->htobe(&key);
+             type2->htobe(&blkid);
+            REQUIRE(
+                bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) ==
+                i);
+        }
+        n =3000;
+        for (int i = 1000; i <= n; i++) {
+            key = i;
+            blkid = i;
+            type->htobe(&key);
+            type2->htobe(&blkid);
+            bt.insert(iov);
+            REQUIRE(
+                bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) ==
+                i);
         }
 
-        bt.print();
-        for (int i = 1; i <= n; i++) {
-            REQUIRE(bt.search(new int(i), sizeof(int)) == i);
-        }
+        
     }
 }

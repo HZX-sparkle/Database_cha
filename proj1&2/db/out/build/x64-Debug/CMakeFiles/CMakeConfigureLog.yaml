@@ -4,20 +4,20 @@ events:
   -
     kind: "message-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
       - "CMakeLists.txt:9 (project)"
     message: |
       The system is: Windows - 10.0.22631 - AMD64
   -
     kind: "message-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:9 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-      Compiler: D:/Developer/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x64/cl.exe 
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x64/cl.exe 
       Build flags: 
       Id flags:  
       
@@ -39,31 +39,31 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
       
       The C compiler identification is MSVC, found in:
-        D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/3.28.3-msvc11/CompilerIdC/CMakeCCompilerId.exe
+        D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/3.28.3-msvc11/CompilerIdC/CMakeCCompilerId.exe
       
   -
     kind: "message-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:1182 (message)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:247 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:1182 (message)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:247 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:9 (project)"
     message: |
       Detecting C compiler /showIncludes prefix:
         main.c
-        注意: 包含文件:  D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
+        注意: 包含文件:  D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "注意: 包含文件:  "
   -
     kind: "message-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:9 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: D:/Developer/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x64/cl.exe 
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.40.33807/bin/Hostx64/x64/cl.exe 
       Build flags: 
       Id flags:  
       
@@ -85,187 +85,187 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
       
       The CXX compiler identification is MSVC, found in:
-        D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/3.28.3-msvc11/CompilerIdCXX/CMakeCXXCompilerId.exe
+        D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/3.28.3-msvc11/CompilerIdCXX/CMakeCXXCompilerId.exe
       
   -
     kind: "message-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:1182 (message)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:247 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:1182 (message)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:247 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:9 (project)"
     message: |
       Detecting CXX compiler /showIncludes prefix:
         main.c
-        注意: 包含文件:  D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
+        注意: 包含文件:  D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\ShowIncludes\\foo.h
         
       Found prefix "注意: 包含文件:  "
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:9 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-ww1nio"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-ww1nio"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2v5i8j"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2v5i8j"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
     buildResult:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-ww1nio'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2v5i8j'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_101ee
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS /W3  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_101ee.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_101ee.dir\\ /FS -c "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\CMakeCCompilerABI.c"
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_101ee.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_101ee.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_101ee.exe /implib:cmTC_101ee.lib /pdb:cmTC_101ee.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_20d57
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS /W3  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_20d57.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_20d57.dir\\ /FS -c "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\CMakeCCompilerABI.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_20d57.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_20d57.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_20d57.exe /implib:cmTC_20d57.lib /pdb:cmTC_20d57.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:9 (project)"
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lrms99"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lrms99"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-ha6xtv"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-ha6xtv"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
     buildResult:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-lrms99'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-ha6xtv'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_398a1
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_398a1.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_398a1.dir\\ /FS -c "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_398a1.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_398a1.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_398a1.exe /implib:cmTC_398a1.lib /pdb:cmTC_398a1.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_0f5ea
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /W3 /GR /EHsc  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_0f5ea.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_0f5ea.dir\\ /FS -c "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_0f5ea.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_0f5ea.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_0f5ea.exe /implib:cmTC_0f5ea.lib /pdb:cmTC_0f5ea.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:250 (check_include_file)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:250 (check_include_file)"
       - "CMakeLists.txt:151 (check_type_size)"
     checks:
       - "Looking for sys/types.h"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2mzcrq"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2mzcrq"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-wmywsb"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-wmywsb"
     cmakeVariables:
-      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h"
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h"
     buildResult:
       variable: "HAVE_SYS_TYPES_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2mzcrq'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-wmywsb'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_09960
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_09960.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_09960.dir\\ /FS -c D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-2mzcrq\\CheckIncludeFile.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_09960.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_09960.dir\\CheckIncludeFile.c.obj  /out:cmTC_09960.exe /implib:cmTC_09960.lib /pdb:cmTC_09960.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_9771f
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9771f.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_9771f.dir\\ /FS -c D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-wmywsb\\CheckIncludeFile.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_9771f.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_9771f.dir\\CheckIncludeFile.c.obj  /out:cmTC_9771f.exe /implib:cmTC_9771f.lib /pdb:cmTC_9771f.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:251 (check_include_file)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:251 (check_include_file)"
       - "CMakeLists.txt:151 (check_type_size)"
     checks:
       - "Looking for stdint.h"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-qv42ve"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-qv42ve"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-5dn82g"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-5dn82g"
     cmakeVariables:
-      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h"
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h"
     buildResult:
       variable: "HAVE_STDINT_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-qv42ve'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-5dn82g'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_adc62
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_adc62.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_adc62.dir\\ /FS -c D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-qv42ve\\CheckIncludeFile.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_adc62.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_adc62.dir\\CheckIncludeFile.c.obj  /out:cmTC_adc62.exe /implib:cmTC_adc62.lib /pdb:cmTC_adc62.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_f2c02
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_f2c02.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_f2c02.dir\\ /FS -c D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-5dn82g\\CheckIncludeFile.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_f2c02.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_f2c02.dir\\CheckIncludeFile.c.obj  /out:cmTC_f2c02.exe /implib:cmTC_f2c02.lib /pdb:cmTC_f2c02.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:252 (check_include_file)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:252 (check_include_file)"
       - "CMakeLists.txt:151 (check_type_size)"
     checks:
       - "Looking for stddef.h"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-xweyyn"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-xweyyn"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-a94ajs"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-a94ajs"
     cmakeVariables:
-      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h"
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h"
     buildResult:
       variable: "HAVE_STDDEF_H"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-xweyyn'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-a94ajs'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_f515e
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_f515e.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_f515e.dir\\ /FS -c D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-xweyyn\\CheckIncludeFile.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_f515e.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_f515e.dir\\CheckIncludeFile.c.obj  /out:cmTC_f515e.exe /implib:cmTC_f515e.lib /pdb:cmTC_f515e.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_75783
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_75783.dir\\CheckIncludeFile.c.obj /FdCMakeFiles\\cmTC_75783.dir\\ /FS -c D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-a94ajs\\CheckIncludeFile.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_75783.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_75783.dir\\CheckIncludeFile.c.obj  /out:cmTC_75783.exe /implib:cmTC_75783.lib /pdb:cmTC_75783.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
       - "CMakeLists.txt:151 (check_type_size)"
     checks:
       - "Check size of long"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-1adejf"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-1adejf"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2x3zcp"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2x3zcp"
     cmakeVariables:
-      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h"
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h"
     buildResult:
       variable: "HAVE_SIZEOF_LONG"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-1adejf'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-2x3zcp'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_0e857
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_0e857.dir\\SIZEOF_LONG.c.obj /FdCMakeFiles\\cmTC_0e857.dir\\ /FS -c D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-1adejf\\SIZEOF_LONG.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_0e857.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_0e857.dir\\SIZEOF_LONG.c.obj  /out:cmTC_0e857.exe /implib:cmTC_0e857.lib /pdb:cmTC_0e857.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_0d82e
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_0d82e.dir\\SIZEOF_LONG.c.obj /FdCMakeFiles\\cmTC_0d82e.dir\\ /FS -c D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-2x3zcp\\SIZEOF_LONG.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_0d82e.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_0d82e.dir\\SIZEOF_LONG.c.obj  /out:cmTC_0d82e.exe /implib:cmTC_0d82e.lib /pdb:cmTC_0d82e.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
     kind: "try_compile-v1"
     backtrace:
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
-      - "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
       - "CMakeLists.txt:152 (check_type_size)"
     checks:
       - "Check size of wchar_t"
     directories:
-      source: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-9f794n"
-      binary: "D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-9f794n"
+      source: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-etwiad"
+      binary: "D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-etwiad"
     cmakeVariables:
-      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h"
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h"
     buildResult:
       variable: "HAVE_SIZEOF_WCHAR_T"
       cached: true
       stdout: |
-        Change Dir: 'D:/Code/database/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-9f794n'
+        Change Dir: 'D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/out/build/x64-Debug/CMakeFiles/CMakeScratch/TryCompile-etwiad'
         
-        Run Build Command(s): "D:/Developer/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_be2aa
-        [1/2] "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\cl.exe"  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/Code/database/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_be2aa.dir\\SIZEOF_WCHAR_T.c.obj /FdCMakeFiles\\cmTC_be2aa.dir\\ /FS -c D:\\Code\\database\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-9f794n\\SIZEOF_WCHAR_T.c
-        [2/2] C:\\Windows\\system32\\cmd.exe /C "cd . && "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_be2aa.dir --rc="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\rc.exe" --mt="D:\\Windows Kits\\10\\bin\\10.0.22621.0\\x64\\mt.exe" --manifests  -- "D:\\Developer\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.40.33807\\bin\\Hostx64\\x64\\link.exe" /nologo CMakeFiles\\cmTC_be2aa.dir\\SIZEOF_WCHAR_T.c.obj  /out:cmTC_be2aa.exe /implib:cmTC_be2aa.lib /pdb:cmTC_be2aa.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe" -v cmTC_9208f
+        [1/2] C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS /W3 /WX /EHsc /Oy- /utf-8 /FI D:/git_clone_datebase_challenge/Database_cha/proj1&2/db/include/db/config.h  /MDd /Zi /Ob0 /Od /RTC1 /showIncludes /FoCMakeFiles\\cmTC_9208f.dir\\SIZEOF_WCHAR_T.c.obj /FdCMakeFiles\\cmTC_9208f.dir\\ /FS -c D:\\git_clone_datebase_challenge\\Database_cha\\proj1&2\\db\\out\\build\\x64-Debug\\CMakeFiles\\CMakeScratch\\TryCompile-etwiad\\SIZEOF_WCHAR_T.c
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_9208f.dir --rc=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\PROGRA~1\\MIB055~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1440~1.338\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_9208f.dir\\SIZEOF_WCHAR_T.c.obj  /out:cmTC_9208f.exe /implib:cmTC_9208f.lib /pdb:cmTC_9208f.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
 ...
