@@ -671,6 +671,87 @@ TEST_CASE("db/block.h")
         kBuffer.releaseBuf(bd);
     }
 
+    SECTION("update")
+    {
+        Table table;
+        table.open("table");
+
+        // 加载第1个data
+        DataBlock data;
+        // 设定block的meta
+        data.setTable(&table);
+        // 关联数据
+        BufDesp *bd = kBuffer.borrow("table", 1);
+        data.attach(bd->buffer);
+
+        // table = id(BIGINT)+phone(CHAR[20])+name(VARCHAR)
+        // 准备更新
+        DataType *type = findDataType("BIGINT");
+        std::vector<struct iovec> iov(3);
+        long long nid;
+        char phone[20] = "123456789";
+        char addr[128] = "Queen Avenue 1708";
+
+        // 第4条 3 7 11
+        nid = 5;
+        type->htobe(&nid);
+        iov[0].iov_base = &nid;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = phone;
+        iov[1].iov_len = 20;
+        iov[2].iov_base = (void *) addr;
+        iov[2].iov_len = 128;
+        unsigned short osize = data.getFreespaceSize();
+        unsigned short nsize = data.requireLength(iov);
+        REQUIRE(nsize == 168);
+        std::pair<bool, unsigned short> ret = data.updateRecord(iov);
+        REQUIRE(ret.first);
+        REQUIRE(ret.second == 1);
+        REQUIRE(data.getFreespaceSize() == osize - nsize);
+        REQUIRE(data.getSlots() == 4);
+        Slot *slots = data.getSlotsPointer();
+        Record record;
+        record.attach(
+            data.buffer_ + be16toh(slots[1].offset), be16toh(slots[1].length));
+        REQUIRE(record.length() == Record::size(iov));
+        REQUIRE(record.fields() == 3);
+        long long xid;
+        unsigned char* pid;
+        unsigned int len;
+        // nid
+        record.getByIndex((char *) &xid, &len, 0);
+        REQUIRE(len == 8);
+        type->betoh(&xid);
+        REQUIRE(xid == 5);
+        // phone
+        record.refByIndex(&pid, &len, 1);
+        REQUIRE(len == 20);
+        REQUIRE(strcmp((const char*)pid, "123456789") == 0);
+        // addr
+        record.refByIndex(&pid, &len, 2);
+        REQUIRE(len == 128);
+        REQUIRE(strcmp((const char*)pid, "Queen Avenue 1708") == 0);
+
+        // 不存在的记录
+        nid = 6;
+        type->htobe(&nid);
+        iov[0].iov_base = &nid;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = phone;
+        iov[1].iov_len = 20;
+        iov[2].iov_base = (void *) addr;
+        iov[2].iov_len = 128;
+        osize = data.getFreespaceSize();
+        nsize = data.requireLength(iov);
+        REQUIRE(nsize == 168);
+        ret = data.updateRecord(iov);
+        // 不存在，更新失败
+        REQUIRE(!ret.first);
+        REQUIRE(ret.second == (unsigned short) - 1);
+
+        kBuffer.releaseBuf(bd);
+    }
+
     SECTION("iterator")
     {
         Table table;

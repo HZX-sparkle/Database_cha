@@ -41,9 +41,14 @@ namespace db {
 const unsigned short BLOCK_TYPE_IDLE = 0;  // 空闲
 const unsigned short BLOCK_TYPE_SUPER = 1; // 超块
 const unsigned short BLOCK_TYPE_DATA = 2;  // 数据
-const unsigned short BLOCK_TYPE_INDEX = 3; // 索引
+//const unsigned short BLOCK_TYPE_INDEX = 3; // 索引
 const unsigned short BLOCK_TYPE_META = 4;  // 元数据
 const unsigned short BLOCK_TYPE_LOG = 5;   // wal日志
+
+// B+tree
+const unsigned short BLOCK_TYPE_INDEX_ROOT = 3; // 根节点索引
+const unsigned short BLOCK_TYPE_INDEX_INTERNAL = 6; // 中间节点索引
+const unsigned short BLOCK_TYPE_INDEX_POINT_TO_LEAF = 7; // 与叶子节点相连的索引
 
 const unsigned int SUPER_SIZE = 1024 * 4;  // 超块大小为4KB
 const unsigned int BLOCK_SIZE = 1024 * 16; // 一般块大小为16KB
@@ -107,6 +112,9 @@ struct DataHeader : CommonHeader
     unsigned short freesize; // 空闲空间大小(2B)
     unsigned int self;       // 本块id(4B)
 };
+
+// 索引块头部
+using IndexHeader = DataHeader;
 
 // 元数据块头部
 using MetaHeader = DataHeader;
@@ -618,6 +626,9 @@ inline bool operator>=(
     // ASSERT(x.block == y.block);
     return x.index >= y.index;
 }
+
+// indexBlock直接继承DataBlock
+class IndexBlock : public DataBlock{};
 
 } // namespace db
 
