@@ -3,11 +3,11 @@
 #include <sstream>
 #include <iostream>
 
-void BitmapIndex::readCSV(const std::string &filename) {
+bool BitmapIndex::readCSV(const std::string &filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
-        return;
+        return false;
     }
 
     std::string line, id, tag;
@@ -20,6 +20,8 @@ void BitmapIndex::readCSV(const std::string &filename) {
         }
         idToTags[id] = tags;
     }
+
+    return true;
 }
 
 void BitmapIndex::buildInvertedIndex() {
