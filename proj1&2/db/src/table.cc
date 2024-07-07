@@ -310,6 +310,7 @@ int Table::remove(unsigned int blkid, void *keybuf, unsigned int len)
         if (memcmp(pkey, keybuf, len2) == 0) // key相等，找到，删除
         {
             data.deallocate(index);
+            if (data.getSlots() == 0) deallocate(blkid); // 如果删完了，则回收这个块
             kBuffer.releaseBuf(bd); // 释放buffer
             // 修改表头统计
             bd = kBuffer.borrow(name_.c_str(), 0);

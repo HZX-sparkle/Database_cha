@@ -483,4 +483,125 @@ DataBlock::RecordIterator DataBlock::endrecord()
     return ri;
 }
 
+unsigned short IndexBlock::searchRecord(void *buf, size_t len)
+{
+    DataHeader *header = reinterpret_cast<IndexHeader *>(buffer_);
+
+    // 获取info
+    RelationInfo *info = bplustree_->info_;
+    unsigned int key = info->key;
+
+    // 调用数据类型的搜索
+    return info->fields[key].type->search(buffer_, key, buf, len);
+}
+
+std::pair<unsigned short, bool>
+IndexBlock::splitPosition(size_t space, unsigned short index)
+{
+    DataHeader *header = reinterpret_cast<IndexHeader *>(buffer_);
+    RelationInfo *info = bplustree_->info_;
+    unsigned int key = info->key;
+    static const unsigned short BlockHalf =
+        (BLOCK_SIZE - sizeof(IndexHeader) - 8) / 2; // 一半的大小
+
+    // 枚举所有记录
+    unsigned short count = getSlots();
+    size_t half = 0;
+    Slot *slots = getSlotsPointer();
+    bool included = false;
+    unsigned short i;
+    for (i = 0; i < count; ++i) {
+        // 如果是index，则将需要插入的记录空间算在内
+        if (i == index) {
+            // 这里的计算并不精确，没有准确考虑slot的大小，但只算一半没有太大的误差。
+            half += ALIGN_TO_SIZE(space) + sizeof(Slot);
+            if (half > BlockHalf)
+                break;
+            else
+                included = true;
+        }
+
+        // fallthrough, i != index
+        half += be16toh(slots[i].length);
+        if (half > BlockHalf) break;
+    }
+    return std::pair<unsigned short, bool>(i, included);
+}
+
+std::pair<bool, unsigned short>
+IndexBlock::insertRecord(std::vector<struct iovec> &iov)
+{
+    RelationInfo *info = bplustree_->info_;
+    unsigned int key = info->key;
+    DataType *type = info->fields[key].type;
+
+    // 先确定插入位置
+    unsigned short index =
+        type->search(buffer_, key, iov[key].iov_base, iov[key].iov_len);
+
+    // 比较key
+    Record record;
+    if (index < getSlots()) {
+        Slot *slots = getSlotsPointer();
+        record.attach(
+            buffer_ + be16toh(slots[index].offset),
+            be16toh(slots[index].length));
+        unsigned char *pkey;
+        unsigned int len;
+        record.refByIndex(&pkey, &len, key);
+        if (memcmp(pkey, iov[key].iov_base, len) == 0) // key相等不能插入
+            return std::pair<bool, unsigned short>(false, -1);
+    }
+
+    // 如果block空间足够，插入
+    size_t blen = getFreeSize(); // 该block的富余空间
+    unsigned short actlen = (unsigned short) Record::size(iov);
+    unsigned short alignlen = ALIGN_TO_SIZE(actlen);
+    unsigned short trailerlen =
+        ALIGN_TO_SIZE((getSlots() + 1) * sizeof(Slot) + sizeof(unsigned int)) -
+        ALIGN_TO_SIZE(getSlots() * sizeof(Slot) + sizeof(unsigned int));
+    if (blen < actlen + trailerlen)
+        return std::pair<bool, unsigned short>(false, index);
+
+    // 分配空间
+    std::pair<unsigned char *, bool> alloc_ret = allocate(actlen, index);
+    // 填写记录
+    record.attach(alloc_ret.first, actlen);
+    unsigned char header = 0;
+    record.set(iov, &header);
+    // 重新排序
+    if (alloc_ret.second) reorder(type, key);
+
+    return std::pair<bool, unsigned short>(true, index);
+}
+
+std::pair<bool, unsigned short>
+IndexBlock::updateRecord(std::vector<struct iovec> &iov){
+    RelationInfo *info = bplustree_->info_;
+    unsigned int key = info->key;
+    DataType *type = info->fields[key].type;
+
+    // 先确定修改位置
+    unsigned short index =
+        type->search(buffer_, key, iov[key].iov_base, iov[key].iov_len);
+
+    // 比较key
+    Record record;
+    if (index < getSlots()) {
+        Slot *slots = getSlotsPointer();
+        record.attach(
+            buffer_ + be16toh(slots[index].offset),
+            be16toh(slots[index].length));
+        unsigned char *pkey;
+        unsigned int len;
+        record.refByIndex(&pkey, &len, key);
+        if (memcmp(pkey, iov[key].iov_base, len) != 0) // key不相等不能更新
+            return std::pair<bool, unsigned short>(false, -1);
+    }
+
+    //修改：先删除再插入
+    this->deallocate(index);
+    return this->insertRecord(iov);
+}
+
 } // namespace db

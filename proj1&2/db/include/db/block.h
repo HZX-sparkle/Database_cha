@@ -41,14 +41,9 @@ namespace db {
 const unsigned short BLOCK_TYPE_IDLE = 0;  // 空闲
 const unsigned short BLOCK_TYPE_SUPER = 1; // 超块
 const unsigned short BLOCK_TYPE_DATA = 2;  // 数据
-//const unsigned short BLOCK_TYPE_INDEX = 3; // 索引
+const unsigned short BLOCK_TYPE_INDEX = 3; // 索引
 const unsigned short BLOCK_TYPE_META = 4;  // 元数据
 const unsigned short BLOCK_TYPE_LOG = 5;   // wal日志
-
-// B+tree
-const unsigned short BLOCK_TYPE_INDEX_ROOT = 3; // 根节点索引
-const unsigned short BLOCK_TYPE_INDEX_INTERNAL = 6; // 中间节点索引
-const unsigned short BLOCK_TYPE_INDEX_POINT_TO_LEAF = 7; // 与叶子节点相连的索引
 
 const unsigned int SUPER_SIZE = 1024 * 4;  // 超块大小为4KB
 const unsigned int BLOCK_SIZE = 1024 * 16; // 一般块大小为16KB
@@ -628,7 +623,34 @@ inline bool operator>=(
 }
 
 // indexBlock直接继承DataBlock
-class IndexBlock : public DataBlock{};
+// TODO: 重写searchRecord; splitPosition; insertRecord; updateRecord;
+class BPlusTree;
+class IndexBlock : public DataBlock
+{
+  public:
+    BPlusTree *bplustree_; // 指向bplustree
+
+  public:
+    IndexBlock()
+        : bplustree_(NULL)
+    {}
+
+    // 设定bplustree
+    inline void setBtree(BPlusTree* bplustree) { bplustree_ = bplustree; }
+    // 获取bplustree
+    inline BPlusTree *getBtree() { return bplustree_; }
+    
+    unsigned short searchRecord(void *key, size_t size);
+
+    std::pair<unsigned short, bool>
+    splitPosition(size_t space, unsigned short index);
+    
+    std::pair<bool, unsigned short>
+    insertRecord(std::vector<struct iovec> &iov);
+    
+    std::pair<bool, unsigned short>
+    updateRecord(std::vector<struct iovec> &iov);
+};
 
 } // namespace db
 

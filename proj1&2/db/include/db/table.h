@@ -15,6 +15,7 @@
 #include "./schema.h"
 #include "./block.h"
 #include "./buffer.h"
+#include "./bplustree.h"
 
 namespace db {
 
