@@ -615,7 +615,8 @@ TEST_CASE("db/table.h")
         iov[0].iov_len = 8;
         iov[1].iov_base = &blkid;
         iov[1].iov_len = 4;
-       
+        bt.insert(iov);
+        bt.print_all_blk_id();
         int n = 500;
         for (int i = 100; i <= n; i++) {
             key = i;
@@ -624,6 +625,7 @@ TEST_CASE("db/table.h")
             type2->htobe(&blkid);
             bt.insert(iov);
         }
+        
          n = 500;
         for (int i = 100; i <= n; i++) {
              key = i;
@@ -645,7 +647,9 @@ TEST_CASE("db/table.h")
                 bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) ==
                 i);
         }
-
-        
+        bt.print_all_blk_id();
+        unsigned test_num = 2332033024;
+        findDataType("INT")->betoh(&test_num);
+        std::cout << test_num;
     }
 }

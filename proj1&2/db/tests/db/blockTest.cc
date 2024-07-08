@@ -954,9 +954,11 @@ TEST_CASE("db/block.h")
         index = data.searchRecord(iov[key2].iov_base, iov[key2].iov_len);
         REQUIRE(index == 4);
 
+        
 
         // 写入，释放
         kBuffer.writeBuf(bd);
         kBuffer.releaseBuf(bd);
+        table.deallocate(2);
     }
 }

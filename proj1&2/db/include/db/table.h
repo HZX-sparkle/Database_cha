@@ -65,14 +65,53 @@ class Table
             , root_blkid(NULL)
         {}
 
-        std::vector<unsigned int> get_all_blk_id(IndexBlock data)
+
+        //测试用
+        std::vector<unsigned int> get_all_blkid(IndexBlock data)
         { 
             std::vector<unsigned int> ids;
-            for (auto it = data.beginrecord(); it != data.endrecord(); it++) {
+            ids.push_back(data.getNext());
+            for (int index = 0; index < data.getSlots(); index++) {
+                Record record;
+                Slot *slots = data.getSlotsPointer();
+                record.attach(
+                    data.buffer_ + be16toh(slots[index].offset),
+                    be16toh(slots[index].length));
+                unsigned int len;
+                unsigned int blkid;
+                record.getByIndex((char *) &blkid, &len, 1);
+                findDataType("INT")->betoh(&blkid);
+                ids.push_back(blkid);
+            }
+            return ids;
+        }
+        void block_print_all_blk_id(unsigned int index_blkid, unsigned floor)
+        {
+            IndexBlock data;
+            data.setTable(table_);
+
+            // 从buffer中借用
+            BufDesp *bd = kBuffer.borrow(table_->name_.c_str(), index_blkid);
+            data.attach(bd->buffer);
+            std::vector<unsigned int> all_blkid = get_all_blkid(data);
+
+            for (unsigned i : all_blkid) {
+                for (unsigned i = 0; i < floor; i++) {
+                    std::cout << "    ";
+                }
+                    std::cout<< i << std::endl;
+                if (data.getType() == BLOCK_TYPE_INDEX_INTERNAL) {
+                    block_print_all_blk_id(i, floor + 1);
+                }
 
             }
-
         }
+        void print_all_blk_id()
+        {
+            block_print_all_blk_id(root_blkid, 0);
+        }
+
+
         unsigned int get_goal(IndexBlock data, void *key_buff, size_t len)
         {
              int index = (int)data.searchRecord(key_buff, len);
@@ -112,8 +151,6 @@ class Table
             // 从buffer中借用
             BufDesp *bd = kBuffer.borrow(table_->name_.c_str(), index_blkid);
             data.attach(bd->buffer);
-            long long key_v =*(long long *) key_buff;
-            findDataType("BIGINT")->betoh(&key_v);
             unsigned goal = get_goal(data, key_buff, len);
 
             if (data.getType() == BLOCK_TYPE_INDEX_POINT_TO_LEAF) {
@@ -122,8 +159,6 @@ class Table
 
             //当data.getType() == BLOCK_TYPE_INDEX_INTERNA
             return block_search(goal,key_buff,len);
-            
-            
         }
          
         //******** 所需信息 ********
@@ -265,53 +300,11 @@ class Table
             BufDesp *bd2 = kBuffer.borrow(table_->name_.c_str(), blkid);
             new_root.attach(bd2->buffer);
             new_root.setType(BLOCK_TYPE_INDEX_INTERNAL);
-            findDataType("INT")->htobe(&root_blkid);
             new_root.setNext(root_blkid);
             block_insert_to_this_node(new_root.getSelf(), ret.second);
             root_blkid = new_root.getSelf();
             return S_OK;
         }
-        
-
-        //Node* root;
-        //bool is_init;
-        //unsigned int max_key_size;
-        //const unsigned int default_max_key_size=100;
-        ////Table *table_; // 指向table
-
-        //B_plus_tree() :is_init (false){}
-        //B_plus_tree(unsigned int max_key_size)
-        //    : is_init(false)
-        //    , max_key_size(max_key_size)
-        //{}
-        //
-        //void print() {
-        //    std::vector<std::pair<int, int> > value;
-        //    root->collect_value(value, 0);
-        //    for (auto v : value) {
-        //        std::cout <<std::setw(v.second*4)<< v.first << std::endl;
-        //    }
-        //}
-        //unsigned int search(void *keybuf, unsigned int len){
-        //    return root->search(keybuf, len);
-        //}
-        //void insert(unsigned int blkid, void* keybuf, unsigned int len) {
-        //    if (!is_init) {
-        //        root = new Node(
-        //            max_key_size, BLOCK_TYPE_INDEX_POINT_TO_LEAF, blkid);
-        //        is_init = true;
-        //        return;
-        //    }
-        //    if (root->is_full()) {
-        //        auto seconde_son = root->spare();
-        //        Node *new_root =
-        //            new Node(root->max_key_size, BLOCK_TYPE_INDEX_INTERNAL, seconde_son);
-        //        seconde_son.forward_sub_node = root;
-        //        new_root->sub_nodes.push_back(seconde_son);
-        //        root = new_root;
-        //    }
-        //    root->insert(blkid, keybuf, len);
-        //}
     };
 
   public:
