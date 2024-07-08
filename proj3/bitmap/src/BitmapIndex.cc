@@ -34,6 +34,7 @@ void BitmapIndex::buildInvertedIndex() {
             tagToBitmap[tag].add(id_int);
         }
     }
+    for(auto &bitmap : tagToBitmap) bitmap.second.runOptimize();
 }
 
 Roaring BitmapIndex::getBitmap(const std::string &tag) const {
