@@ -817,4 +817,399 @@ TEST_CASE("db/block.h")
 
         kBuffer.releaseBuf(bd);
     }
+
+    SECTION("index")
+    {
+        IndexBlock data;
+        unsigned char buffer[BLOCK_SIZE];
+
+        data.attach(buffer);
+        data.clear(3, 3, BLOCK_TYPE_INDEX);
+
+        // magic number：0x64623031
+        REQUIRE(buffer[0] == 0x64);
+        REQUIRE(buffer[1] == 0x62);
+        REQUIRE(buffer[2] == 0x30);
+        REQUIRE(buffer[3] == 0x31);
+
+        unsigned int spaceid = data.getSpaceid();
+        REQUIRE(spaceid == 3);
+
+        unsigned short type = data.getType();
+        REQUIRE(type == BLOCK_TYPE_INDEX);
+
+        unsigned short freespace = data.getFreeSpace();
+        REQUIRE(freespace == sizeof(IndexHeader));
+
+        unsigned int next = data.getNext();
+        REQUIRE(next == 0);
+
+        unsigned int self = data.getSelf();
+        REQUIRE(self == 3);
+
+        TimeStamp ts = data.getTimeStamp();
+        char tb[64];
+        REQUIRE(ts.toString(tb, 64));
+        // printf("ts=%s\n", tb);
+        TimeStamp ts1;
+        ts1.now();
+        REQUIRE(ts < ts1);
+
+        unsigned short slots = data.getSlots();
+        REQUIRE(slots == 0);
+
+        REQUIRE(data.getFreeSize() == data.getFreespaceSize());
+
+        REQUIRE(data.checksum());
+
+        REQUIRE(data.getTrailerSize() == 8);
+        Slot *pslots =
+            reinterpret_cast<Slot *>(buffer + BLOCK_SIZE - sizeof(Slot));
+        REQUIRE(pslots == data.getSlotsPointer());
+        REQUIRE(data.getFreespaceSize() == BLOCK_SIZE - 8 - sizeof(DataHeader));
+
+        // 假设有5个slots槽位
+        data.setSlots(5);
+        REQUIRE(data.getTrailerSize() == sizeof(Slot) * 5 + sizeof(int));
+        pslots =
+            reinterpret_cast<Slot *>(buffer + BLOCK_SIZE - sizeof(Slot)) - 5;
+        REQUIRE(pslots == data.getSlotsPointer());
+        REQUIRE(
+            data.getFreespaceSize() ==
+            BLOCK_SIZE - data.getTrailerSize() - sizeof(DataHeader));
+    }
+
+    SECTION("index_allocate")
+    {
+        IndexBlock data;
+        unsigned char buffer[BLOCK_SIZE];
+
+        data.attach(buffer);
+        data.clear(3, 3, BLOCK_TYPE_DATA);
+
+        // 分配8字节
+        std::pair<unsigned char *, bool> alloc_ret = data.allocate(8, 0);
+        REQUIRE(alloc_ret.first == buffer + sizeof(DataHeader));
+        REQUIRE(data.getFreeSpace() == sizeof(DataHeader) + 8);
+        REQUIRE(
+            data.getFreeSize() ==
+            BLOCK_SIZE - sizeof(DataHeader) - sizeof(Trailer) - 8);
+        REQUIRE(data.getSlots() == 1);
+        Slot *pslots = data.getSlotsPointer();
+        REQUIRE(
+            (unsigned char *) pslots ==
+            buffer + BLOCK_SIZE - sizeof(int) - sizeof(Slot));
+        REQUIRE(be16toh(pslots[0].offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(pslots[0].length) == 8);
+        REQUIRE(data.getTrailerSize() == 8);
+
+        // 随便写一个记录
+        Record record;
+        record.attach(buffer + sizeof(DataHeader), 8);
+        std::vector<struct iovec> iov(1);
+        int kkk = 3;
+        iov[0].iov_base = (void *) &kkk;
+        iov[0].iov_len = sizeof(int);
+        unsigned char h = 0;
+        record.set(iov, &h);
+
+        // 分配5字节
+        alloc_ret = data.allocate(5, 0);
+        REQUIRE(alloc_ret.first == buffer + sizeof(DataHeader) + 8);
+        REQUIRE(data.getFreeSpace() == sizeof(DataHeader) + 2 * 8);
+        REQUIRE(
+            data.getFreeSize() ==
+            BLOCK_SIZE - sizeof(DataHeader) - sizeof(Trailer) - 3 * 8);
+        REQUIRE(data.getSlots() == 2);
+        pslots = data.getSlotsPointer();
+        REQUIRE(
+            (unsigned char *) pslots ==
+            buffer + BLOCK_SIZE - sizeof(int) - 2 * sizeof(Slot));
+        REQUIRE(be16toh(pslots[0].offset) == sizeof(DataHeader) + 8);
+        REQUIRE(be16toh(pslots[0].length) == 8);
+        REQUIRE(be16toh(pslots[1].offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(pslots[1].length) == 8);
+        REQUIRE(data.getTrailerSize() == 16);
+
+        record.attach(buffer + sizeof(DataHeader) + 8, 8);
+        kkk = 4;
+        iov[0].iov_base = (void *) &kkk;
+        iov[0].iov_len = sizeof(int);
+        record.set(iov, &h);
+
+        // 分配711字节
+        alloc_ret = data.allocate(711, 0);
+        REQUIRE(alloc_ret.first == buffer + sizeof(DataHeader) + 8 * 2);
+        REQUIRE(data.getFreeSpace() == sizeof(DataHeader) + 2 * 8 + 712);
+        REQUIRE(
+            data.getFreeSize() ==
+            BLOCK_SIZE - sizeof(DataHeader) - sizeof(Trailer) - 3 * 8 - 712);
+        REQUIRE(data.getSlots() == 3);
+        pslots = data.getSlotsPointer();
+        REQUIRE(
+            (unsigned char *) pslots ==
+            buffer + BLOCK_SIZE - sizeof(int) - 3 * sizeof(Slot));
+        REQUIRE(be16toh(pslots[0].offset) == sizeof(DataHeader) + 16);
+        REQUIRE(be16toh(pslots[0].length) == 712);
+        REQUIRE(data.getTrailerSize() == 16);
+
+        record.attach(buffer + sizeof(DataHeader) + 2 * 8, 712);
+        char ggg[711 - 4];
+        iov[0].iov_base = (void *) ggg;
+        iov[0].iov_len = 711 - 4;
+        record.set(iov, &h);
+        REQUIRE(record.length() == 711);
+
+        // 回收第2个空间
+        unsigned short size = data.getFreeSize();
+        data.deallocate(1);
+        REQUIRE(data.getFreeSize() == size + 8);
+        record.attach(buffer + sizeof(DataHeader) + 8, 8);
+        REQUIRE(!record.isactive());
+
+        REQUIRE(data.getSlots() == 2);
+        pslots = data.getSlotsPointer();
+        REQUIRE(
+            (unsigned char *) pslots ==
+            buffer + BLOCK_SIZE - sizeof(int) - 2 * sizeof(Slot));
+        REQUIRE(be16toh(pslots[0].offset) == sizeof(DataHeader) + 16);
+        REQUIRE(be16toh(pslots[0].length) == 712);
+        REQUIRE(be16toh(pslots[1].offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(pslots[1].length) == 8);
+        REQUIRE(data.getTrailerSize() == 16);
+
+        data.shrink();
+        size = data.getFreeSize();
+        REQUIRE(
+            size ==
+            BLOCK_SIZE - sizeof(DataHeader) - data.getTrailerSize() - 8 - 712);
+        unsigned short freespace = data.getFreeSpace();
+        REQUIRE(freespace == sizeof(DataHeader) + 8 + 712);
+
+        REQUIRE(data.getSlots() == 2);
+        pslots = data.getSlotsPointer();
+        REQUIRE(
+            (unsigned char *) pslots ==
+            buffer + BLOCK_SIZE - sizeof(int) - 2 * sizeof(Slot));
+        REQUIRE(be16toh(pslots[0].offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(pslots[0].length) == 8);
+        REQUIRE(be16toh(pslots[1].offset) == sizeof(DataHeader) + 8);
+        REQUIRE(be16toh(pslots[1].length) == 712);
+        REQUIRE(data.getTrailerSize() == 16);
+
+        record.attach(buffer + sizeof(DataHeader) + 8, 8);
+        REQUIRE(record.isactive());
+
+        // 回收第3个空间
+        size = data.getFreeSize();
+        data.deallocate(1);
+        REQUIRE(data.getFreeSize() == size + 712 + 8);
+        record.attach(buffer + sizeof(DataHeader) + 8, 8);
+        REQUIRE(!record.isactive());
+
+        REQUIRE(data.getSlots() == 1);
+        pslots = data.getSlotsPointer();
+        REQUIRE(
+            (unsigned char *) pslots ==
+            buffer + BLOCK_SIZE - sizeof(int) - sizeof(Slot));
+        REQUIRE(be16toh(pslots[0].offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(pslots[0].length) == 8);
+        REQUIRE(data.getTrailerSize() == 8);
+
+        // 回收第1个空间
+        size = data.getFreeSize();
+        data.deallocate(0);
+        REQUIRE(data.getFreeSize() == size + 8);
+        record.attach(buffer + sizeof(DataHeader), 8);
+        REQUIRE(!record.isactive());
+
+        // shrink
+        data.shrink();
+        size = data.getFreeSize();
+        REQUIRE(
+            size == BLOCK_SIZE - sizeof(DataHeader) - data.getTrailerSize());
+        freespace = data.getFreeSpace();
+        REQUIRE(freespace == sizeof(DataHeader));
+    }
+
+    SECTION("index_sort")
+    {
+        char x[3] = {'k', 'a', 'e'};
+        std::sort(x, x + 3);
+        REQUIRE(x[0] == 'a');
+        REQUIRE(x[1] == 'e');
+        REQUIRE(x[2] == 'k');
+    }
+
+    SECTION("index_reorder")
+    {
+        DataBlock data;
+        unsigned char buffer[BLOCK_SIZE];
+
+        data.attach(buffer);
+        data.clear(3, 3, BLOCK_TYPE_DATA);
+
+        // 假设表的字段是：id, bid
+        std::vector<struct iovec> iov(2);
+        DataType *type = findDataType("BIGINT");
+
+        // 第1条记录
+        long long id = 12;
+        unsigned int bid = 10;
+        type->htobe(&id);
+        findDataType("INT")->htobe(&bid);
+        iov[0].iov_base = &id;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = &bid;
+        iov[1].iov_len = 8;
+
+        // 分配空间
+        unsigned short len = (unsigned short) Record::size(iov);
+        std::pair<unsigned char *, bool> alloc_ret = data.allocate(len, 0);
+        // 填充记录
+        Record record;
+        record.attach(alloc_ret.first, len);
+        unsigned char header = 0;
+        record.set(iov, &header);
+        // 重新排序
+        data.reorder(type, 0);
+
+        REQUIRE(data.getFreeSpace() == sizeof(DataHeader) + len + 4);
+        Slot *slot =
+            (Slot *) (buffer + BLOCK_SIZE - sizeof(int) - sizeof(Slot));
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(slot->length) == len + 4);
+        REQUIRE(data.getSlots() == 1);
+
+        // 第2条记录
+        id = 3;
+        bid = 4;
+        type->htobe(&id);
+        findDataType("INT")->htobe(&bid);
+        iov[0].iov_base = &id;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = &bid;
+        iov[1].iov_len = 8;
+
+        // 分配空间
+        unsigned short len2 = len;
+        len = (unsigned short) Record::size(iov);
+        alloc_ret = data.allocate(len, 0);
+        // 填充记录
+        record.attach(alloc_ret.first, len);
+        record.set(iov, &header);
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(slot->length) == len + 4);
+        --slot;
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader) + len2 + 4);
+        REQUIRE(be16toh(slot->length) == len + 4);
+        // 重新排序
+        data.reorder(type, 0);
+
+        slot = (Slot *) (buffer + BLOCK_SIZE - sizeof(int) - 2 * sizeof(Slot));
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader) + len2 + 4);
+        REQUIRE(be16toh(slot->length) == len + 4);
+        ++slot;
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(slot->length) == len2 + 4);
+    }
+
+    SECTION("index_lowerbound")
+    {
+        char x[4] = {'a', 'c', 'e', 'k'};
+        char s = 'e';
+        char *ret = std::lower_bound(x, x + 4, s);
+        REQUIRE(ret == x + 2);
+
+        // b总是搜索值
+        struct Comp
+        {
+            char val;
+            bool operator()(char a, char b)
+            {
+                REQUIRE(b == -1);
+                return a < val;
+            }
+        };
+        Comp comp;
+        comp.val = 'd';
+        s = -1;
+        ret = std::lower_bound(x, x + 4, s, comp);
+        REQUIRE(ret == x + 2);
+    }
+
+    SECTION("index_search")
+    {
+        IndexBlock data;
+        unsigned char buffer[BLOCK_SIZE];
+
+        data.attach(buffer);
+        data.clear(3, 3, BLOCK_TYPE_DATA);
+
+        // 假设表的字段是：id, bid
+        std::vector<struct iovec> iov(2);
+        DataType *type = findDataType("BIGINT");
+
+        // 第1条记录
+        long long id = 12;
+        unsigned int bid = 10;
+        type->htobe(&id);
+        findDataType("INT")->htobe(&bid);
+        iov[0].iov_base = &id;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = &bid;
+        iov[1].iov_len = 8;
+
+        // 分配空间
+        unsigned short len = (unsigned short) Record::size(iov);
+        std::pair<unsigned char *, bool> alloc_ret = data.allocate(len, 0);
+        // 填充记录
+        Record record;
+        record.attach(alloc_ret.first, len);
+        unsigned char header = 0;
+        record.set(iov, &header);
+        // 重新排序
+        data.reorder(type, 0);
+        // 重设校验和
+        data.setChecksum();
+
+        // 第2条记录
+        id = 3;
+        bid = 4;
+        type->htobe(&id);
+        findDataType("INT")->htobe(&bid);
+        iov[0].iov_base = &id;
+        iov[0].iov_len = 8;
+        iov[1].iov_base = &bid;
+        iov[1].iov_len = 8;
+
+        // 分配空间
+        unsigned short len2 = len;
+        len = (unsigned short) Record::size(iov);
+        alloc_ret = data.allocate(len, 0);
+        // 填充记录
+        record.attach(alloc_ret.first, len);
+        record.set(iov, &header);
+        // 重新排序
+        data.reorder(type, 0);
+
+        Slot *slot =
+            (Slot *) (buffer + BLOCK_SIZE - sizeof(int) - 2 * sizeof(Slot));
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader) + len2 + 4);
+        REQUIRE(be16toh(slot->length) == len + 4);
+        ++slot;
+        REQUIRE(be16toh(slot->offset) == sizeof(DataHeader));
+        REQUIRE(be16toh(slot->length) == len2 + 4);
+
+        // 搜索
+        id = htobe64(3);
+        unsigned short ret = type->search(buffer, 0, &id, sizeof(id));
+        REQUIRE(ret == 0);
+        id = htobe64(12);
+        ret = type->search(buffer, 0, &id, sizeof(id));
+        REQUIRE(ret == 1);
+        id = htobe64(2);
+        ret = type->search(buffer, 0, &id, sizeof(id));
+        REQUIRE(ret == 0);
+    }
 }

@@ -41,8 +41,8 @@ class BPlusTree
     // 初始化B+tree
     bool init(Table *table);
     // btree搜索
-    unsigned int BPlusTree::search(void* keybuf, unsigned int len, unsigned int cur_root);
-    int insert(unsigned int blkid, std::vector<struct iovec> &iov);
+    std::vector<unsigned int> BPlusTree::search(void* keybuf, unsigned int len, std::vector<unsigned int> path);
+    int insert(std::vector<unsigned int> path, std::vector<struct iovec>& iov);
 
     // 新分配一个indexblock，返回blockid，但并没有将该block插入数据链上
     unsigned int allocate();

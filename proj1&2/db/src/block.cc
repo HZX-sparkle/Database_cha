@@ -139,6 +139,8 @@ void SuperBlock::clear(unsigned short spaceid)
     setRecords(0);
     // 设定数据块个数
     setDataCounts(0);
+    //// 设定索引块个数
+    //setIndexCounts(0);
     // 设定空闲块个数
     setIdleCounts(0);
     // 设定空闲空间
@@ -602,6 +604,29 @@ IndexBlock::updateRecord(std::vector<struct iovec> &iov){
     //修改：先删除再插入
     this->deallocate(index);
     return this->insertRecord(iov);
+}
+
+unsigned short IndexBlock::searchDataRecord(void* key, size_t size)
+{
+    return DataBlock::searchRecord(key, size);
+}
+
+std::pair<unsigned short, bool>
+IndexBlock::splitDataPosition(size_t space, unsigned short index)
+{
+    return DataBlock::splitPosition(space, index);
+}
+    
+std::pair<bool, unsigned short>
+IndexBlock::insertDataRecord(std::vector<struct iovec>& iov)
+{
+    return DataBlock::insertRecord(iov);
+}
+    
+std::pair<bool, unsigned short>
+IndexBlock::updateDataRecord(std::vector<struct iovec>& iov)
+{
+    return DataBlock::updateRecord(iov);
 }
 
 } // namespace db

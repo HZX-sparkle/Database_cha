@@ -85,6 +85,7 @@ struct SuperHeader : CommonHeader
     long long stamp;         // 时戳(8B)
     unsigned int idle;       // 空闲块(4B)
     unsigned int datacounts; // 数据块个数
+    //unsigned int indexcounts;// 索引块个数
     unsigned int idlecounts; // 空闲块个数
     unsigned int self;       // 本块id(4B)
     unsigned int maxid;      // 最大的blockid(4B)
@@ -261,13 +262,26 @@ class SuperBlock : public Block
         return be32toh(header->datacounts);
     }
 
+    //// 设置indexcounts
+    //inline void setIndexCounts(unsigned int counts)
+    //{
+    //    SuperHeader *header = reinterpret_cast<SuperHeader *>(buffer_);
+    //    header->datacounts = htobe32(counts);
+    //}
+    //// 获取indexcounts
+    //inline unsigned int getIndexCounts()
+    //{
+    //    SuperHeader *header = reinterpret_cast<SuperHeader *>(buffer_);
+    //    return be32toh(header->datacounts);
+    //}
+
     // 设置idlecounts
     inline void setIdleCounts(unsigned int counts)
     {
         SuperHeader *header = reinterpret_cast<SuperHeader *>(buffer_);
         header->idlecounts = htobe32(counts);
     }
-    // 获取datacounts
+    // 获取idlecounts
     inline unsigned int getIdleCounts()
     {
         SuperHeader *header = reinterpret_cast<SuperHeader *>(buffer_);
@@ -650,6 +664,18 @@ class IndexBlock : public DataBlock
     
     std::pair<bool, unsigned short>
     updateRecord(std::vector<struct iovec> &iov);
+    
+    // DataBlock方法
+    unsigned short searchDataRecord(void *key, size_t size);
+
+    std::pair<unsigned short, bool>
+    splitDataPosition(size_t space, unsigned short index);
+    
+    std::pair<bool, unsigned short>
+    insertDataRecord(std::vector<struct iovec> &iov);
+    
+    std::pair<bool, unsigned short>
+    updateDataRecord(std::vector<struct iovec> &iov);
 };
 
 } // namespace db
