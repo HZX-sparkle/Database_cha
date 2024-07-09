@@ -563,4 +563,29 @@ TEST_CASE("db/table.h")
         REQUIRE(ret == ENOENT);
         REQUIRE(!check(table));
     }
+
+    // b+tree 搜索
+    SECTION("search")
+	{
+		Table table;
+        table.open("table");
+		BPlusTree bplustree;
+		bplustree.init(&table);
+
+		long long id = htobe64(5);
+        int blkid = table.search(&id, sizeof(id));
+        REQUIRE(blkid == 1);
+        id = htobe64(1);
+        blkid = table.search(&id, sizeof(id));
+        REQUIRE(blkid == 1);
+        id = htobe64(32);
+        blkid = table.search(&id, sizeof(id));
+        REQUIRE(blkid == 1);
+	}
+
+    // b+tree 插入
+    SECTION("btree_insert")
+    {
+
+    }
 }

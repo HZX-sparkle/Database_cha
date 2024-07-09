@@ -17,20 +17,20 @@ bool BPlusTree::init(Table* table)
     if (root_) return true; // 已经初始化过
 
     RelationInfo* info = table->info_;
-    RelationInfo btree_info;
+    RelationInfo* btree_info = new RelationInfo();
     unsigned int key = info->key;
     table_ = table;
-    btree_info.key = 0;
-    btree_info.type = info->type;
-    btree_info.count = 2;
-    btree_info.fields.push_back(info->fields[key]);
+    btree_info->key = 0;
+    btree_info->type = info->type;
+    btree_info->count = 2;
+    btree_info->fields.push_back(info->fields[key]);
     FieldInfo field;
     field.name = "blkid";
     field.index = 1;
     field.length = 8;
     field.type = findDataType("INT");
-    btree_info.fields.push_back(field);
-    info_ = &btree_info;
+    btree_info->fields.push_back(field);
+    info_ = btree_info;
 
     // 分配一个块，作为根节点
     IndexBlock root;

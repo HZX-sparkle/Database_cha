@@ -82,6 +82,9 @@ int Table::open(const char *name)
     // 释放超块
     super.detach();
     desp->relref();
+
+    // 初始化b+tree
+
     return S_OK;
 }
 
@@ -381,6 +384,24 @@ int Table::update(unsigned int blkid, std::vector<struct iovec>& iov)
     bd->relref();
     return S_OK;
 }
+
+// btree搜索
+unsigned int Table::search(void* keybuf, unsigned int len)
+{
+    // 调用bplustree的search
+    BPlusTree bplustree;
+    bplustree.init(this);
+    std::vector<unsigned int> path;
+    path.push_back(bplustree.root_);
+    path = bplustree.search(keybuf, len, path);
+    return path.back();
+}
+
+//int Table::btree_insert(unsigned int blkid, std::vector<struct iovec> &iov)
+//{
+//
+//}
+
 
 size_t Table::recordCount()
 {

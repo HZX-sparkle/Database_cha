@@ -53,6 +53,7 @@ class Table
     unsigned int maxid_; // 最大的blockid
     unsigned int idle_;  // 空闲链
     unsigned int first_; // 数据链
+    unsigned int root_;  // b+tree 根节点
 
   public:
     Table()
@@ -60,6 +61,7 @@ class Table
         , maxid_(0)
         , idle_(0)
         , first_(0)
+        , root_(0)
     {}
 
     // 打开一张表

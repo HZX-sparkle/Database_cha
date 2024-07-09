@@ -24,5 +24,15 @@ TEST_CASE("db/bplustree.h")
 		bool ret = bplustree.init(&table);
 		REQUIRE(ret);
 		REQUIRE(bplustree.root_);
+		REQUIRE(bplustree.info_->count == 2);
+		REQUIRE(bplustree.info_->count == 2);
+		REQUIRE(bplustree.info_->key == 0);
+		FieldInfo field = bplustree.info_->fields[1];
+		REQUIRE(field.name == "blkid");
+		REQUIRE(field.index == 1);
+		REQUIRE(field.length == 8);
+		REQUIRE(field.type == findDataType("INT"));
 	}
+
+	
 }
