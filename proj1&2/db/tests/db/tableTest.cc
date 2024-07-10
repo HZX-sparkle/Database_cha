@@ -616,9 +616,24 @@ TEST_CASE("db/table.h")
         iov[1].iov_base = &blkid;
         iov[1].iov_len = 4;
         bt.insert(iov);
-        bt.print_all_blk_id();
-        int n = 500;
+
+        int n = 110;
         for (int i = 100; i <= n; i++) {
+            key = i;
+            blkid = i;
+            type->htobe(&key);
+            type2->htobe(&blkid);
+            bt.insert(iov);
+        }
+        key = 105;
+        blkid = 105;
+        type->htobe(&key);
+        type2->htobe(&blkid);
+        bt.remove(iov[0].iov_base, (unsigned int) iov[0].iov_len);
+
+        
+         n = 500;
+        for (int i = 110; i <= n; i++) {
             key = i;
             blkid = i;
             type->htobe(&key);
@@ -632,9 +647,15 @@ TEST_CASE("db/table.h")
              blkid = i;
              type->htobe(&key);
              type2->htobe(&blkid);
-            REQUIRE(
-                bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) ==
-                i);
+             if (i == 105) {
+                 REQUIRE(
+                     bt.search(
+                         iov[0].iov_base, (unsigned int) iov[0].iov_len) == 106);
+             } else {
+                 REQUIRE(
+                     bt.search(
+                         iov[0].iov_base, (unsigned int) iov[0].iov_len) == i);
+             }
         }
         n =3000;
         for (int i = 1000; i <= n; i++) {
@@ -647,9 +668,24 @@ TEST_CASE("db/table.h")
                 bt.search(iov[0].iov_base, (unsigned int) iov[0].iov_len) ==
                 i);
         }
+        for (int i = 2500; i <= 2600; i++) {
+            key = i;
+            blkid = i;
+            type->htobe(&key);
+            type2->htobe(&blkid);
+            REQUIRE(
+                bt.remove(iov[0].iov_base, (unsigned int) iov[0].iov_len) == S_OK);
+        }
+        for (int i = 2640; i <= 3000; i++) {
+            key = i;
+            blkid = i;
+            type->htobe(&key);
+            type2->htobe(&blkid);
+            REQUIRE(
+                bt.remove(iov[0].iov_base, (unsigned int) iov[0].iov_len) ==
+                S_OK);
+        }
         bt.print_all_blk_id();
-        unsigned test_num = 2332033024;
-        findDataType("INT")->betoh(&test_num);
-        std::cout << test_num;
+        
     }
 }

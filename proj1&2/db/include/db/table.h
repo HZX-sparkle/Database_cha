@@ -18,6 +18,7 @@
 #include <utility>
 #include <iostream>
 #include <iomanip>
+#include <memory>
 #include "./record.h"
 #include "./schema.h"
 #include "./block.h"
@@ -67,6 +68,20 @@ class Table
 
 
         //测试用
+        unsigned get_blkid_by_index(IndexBlock data, unsigned index)
+        {
+            
+            Record record;
+            Slot *slots = data.getSlotsPointer();
+            record.attach(
+                data.buffer_ + be16toh(slots[index].offset),
+                be16toh(slots[index].length));
+            unsigned int len;
+            unsigned int blkid;
+            record.getByIndex((char *) &blkid, &len, 1);
+            findDataType("INT")->betoh(&blkid);
+            return blkid;
+        }
         std::vector<unsigned int> get_all_blkid(IndexBlock data)
         { 
             std::vector<unsigned int> ids;
@@ -112,7 +127,7 @@ class Table
         }
 
 
-        unsigned int get_goal(IndexBlock data, void *key_buff, size_t len)
+        unsigned int get_index(IndexBlock data, void *key_buff, size_t len)
         {
              int index = (int)data.searchRecord(key_buff, len);
 
@@ -128,6 +143,11 @@ class Table
                 if (memcmp(pkey, key_buff, len) == 0) index++;
             }
             index--;
+            return index;
+        }
+        unsigned int index_to_goal(IndexBlock data, int index)
+        {
+            Record record;
             unsigned int goal;
             if (index < 0) {
                 goal = data.getNext();
@@ -137,10 +157,32 @@ class Table
                     data.buffer_ + be16toh(slots[index].offset),
                     be16toh(slots[index].length));
                 unsigned int len;
-                record.getByIndex((char*) & goal, &len, 1);
+                record.getByIndex((char *) &goal, &len, 1);
                 findDataType("INT")->betoh(&goal);
             }
             return goal;
+        }
+        std::pair<void*,unsigned> index_to_key(IndexBlock data, int index)
+        {
+            Record record;
+            if (index < 0) {
+                return {};
+            } 
+            Slot *slots = data.getSlotsPointer();
+            record.attach(
+                data.buffer_ + be16toh(slots[index].offset),
+                be16toh(slots[index].length));
+            unsigned int len;
+            unsigned char *key;
+            record.refByIndex(&key, &len, 0);
+            return {key, len};
+           
+        }
+        unsigned int get_goal(IndexBlock data, void *key_buff, size_t len)
+        {
+            int index = get_index(data,key_buff,len);
+
+            return index_to_goal(data,index);
         }
 
         unsigned int block_search(unsigned int index_blkid,void *key_buff, unsigned int len)
@@ -160,6 +202,8 @@ class Table
             //当data.getType() == BLOCK_TYPE_INDEX_INTERNA
             return block_search(goal,key_buff,len);
         }
+
+     
          
         //******** 所需信息 ********
         // unsigned int state (S_OK|SPARED|EEXIT);
@@ -167,6 +211,7 @@ class Table
         // void *key;
         // void *len;
         #define SPARED 2
+        #define SHRINKED 3
         std::pair < unsigned int,
             std::vector<struct iovec>>
         block_insert_to_this_node(unsigned int index_blkid, std::vector<struct iovec> &iov)
@@ -228,6 +273,7 @@ class Table
             upper_key[0].iov_len = len;
             
             Slot *slots = next.getSlotsPointer();
+
             Record record;
             record.attach(
                 data.buffer_ + be16toh(slots[0].offset),
@@ -271,10 +317,110 @@ class Table
             return block_insert_to_this_node(index_blkid, ret.second);
         }
 
+        std::pair < unsigned int,
+            std::pair<void*, unsigned>>
+        block_remove_to_this_node(
+            unsigned int index_blkid,
+            void *key_buff,
+            unsigned int len)
+        {
+            IndexBlock data;
+            SuperBlock super;
+            data.setTable(table_);
+
+            // 从buffer中借用
+            BufDesp *bd =
+                kBuffer.borrow(table_->name_.c_str(), index_blkid);
+            data.attach(bd->buffer);
+
+            unsigned short index = get_index(data, key_buff, len);
+
+            // 比较key
+            Record record;
+            if (index < data.getSlots()) {
+                Slot *slots = data.getSlotsPointer();
+                record.attach(
+                    data.buffer_ + be16toh(slots[index].offset),
+                    be16toh(slots[index].length));
+                if (index < 0) { 
+                    if (data.getSlots() > 0) {
+                        data.setNext(index_to_goal(data, 0));
+                        data.deallocate(0);
+                        return {S_OK, {}};
+                    }
+
+                    kBuffer.releaseBuf(bd); // 释放buffer
+                    table_->deallocate(index_blkid);
+
+                    return { SHRINKED, {key_buff, len} };
+                }
+                if (index+1== data.getSlots()) {
+                    data.deallocate(index);
+                    if (data.getNext() == NULL && data.getSlots() == 0) {
+                        kBuffer.releaseBuf(bd); // 释放buffer
+                        table_->deallocate(index_blkid);
+
+                        return {SHRINKED, {key_buff, len}};
+                    }
+                } else {
+                    std::vector<iovec> iov(2);
+                    iov[0].iov_base = index_to_key(data,index).first;
+                    iov[0].iov_len = index_to_key(data,index).second;
+                    auto new_blkid = index_to_goal(data, index+1);
+                    findDataType("INT")->htobe(&new_blkid);
+                    iov[1].iov_base = &new_blkid;
+                    iov[1].iov_len = 4;
+                    data.deallocate(index);
+                    data.deallocate(index);
+                    block_insert_to_this_node(index_blkid, iov);
+                    
+                }
+                kBuffer.releaseBuf(bd); 
+                return {S_OK, {}}; // 删除成功
+                    
+            }
+            return {S_FALSE, {}};
+        }
+
+        std::pair<unsigned int, std::pair<void *, unsigned> >
+        block_remove_blkid(
+            unsigned int index_blkid,
+            void *key_buff,
+            unsigned int len)
+        {
+            IndexBlock data;
+            data.setTable(table_);
+
+            // 从buffer中借用
+            BufDesp *bd = kBuffer.borrow(table_->name_.c_str(), index_blkid);
+            data.attach(bd->buffer);
+
+            if (data.getType() == BLOCK_TYPE_INDEX_POINT_TO_LEAF) {
+                return block_remove_to_this_node(index_blkid, key_buff,len);
+            }
+            // 当 data.getType() == BLOCK_TYPE_INDEX_INTERNAL
+            unsigned int goal = get_goal(data, key_buff, len);
+
+            auto ret = block_remove_blkid(goal, key_buff, len);
+            if (ret.first != SHRINKED) { return ret; }
+            return block_remove_to_this_node(index_blkid, ret.second.first,ret.second.second);
+        }
+
+
         unsigned int search(void *key_buff, unsigned int len) {
             if (root_blkid == NULL) return -1;
             return block_search(root_blkid, key_buff, len);
             
+        }
+
+        unsigned int remove(void *key_buff, unsigned int len)
+        {
+            if (root_blkid == NULL) { return S_FALSE;
+            }
+            auto ret = block_remove_blkid(root_blkid, key_buff,len);
+            if (ret.first != SHRINKED) { return ret.first; }
+            root_blkid = NULL;
+            return S_OK;
         }
 
         unsigned int insert(std::vector<struct iovec> &iov)
@@ -286,7 +432,7 @@ class Table
                 BufDesp *bd2 = kBuffer.borrow(table_->name_.c_str(), blkid);
                 new_root.attach(bd2->buffer);
                 new_root.setType(BLOCK_TYPE_INDEX_POINT_TO_LEAF);
-                findDataType("INT")->htobe(iov[1].iov_base);
+                findDataType("INT")->betoh(iov[1].iov_base);
                 new_root.setNext(*(unsigned int*)(iov[1].iov_base));
                 root_blkid = new_root.getSelf();
                 return S_OK;
